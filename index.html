@@ -1,0 +1,828 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>@font-face {
+  font-family: octicons-anchor;
+  src: url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.woff) format('woff');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body .markdown-body {
+    padding: 45px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    word-wrap: break-word;
+}
+
+pre {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-anchor;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .plan-price-unit {
+  color: #767676;
+  font-weight: normal;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body .plan-choice {
+  padding: 15px;
+  padding-left: 40px;
+  display: block;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  font-weight: normal;
+  background-color: #fafafa;
+}
+
+.markdown-body .plan-choice.open {
+  background-color: #fff;
+}
+
+.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
+  display: block;
+}
+
+.markdown-body .plan-choice-free {
+  border-radius: 3px 3px 0 0;
+}
+
+.markdown-body .plan-choice-paid {
+  border-radius: 0 0 3px 3px;
+  border-top: 0;
+  margin-bottom: 20px;
+}
+
+.markdown-body .plan-choice-radio {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+
+.markdown-body .plan-choice-exp {
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.markdown-body .plan-choice-seat-breakdown {
+  margin-top: 10px;
+  display: none;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+
+@media print {
+  body .markdown-body {
+    padding: 0;
+    border: none;
+  }
+}
+</style><title>jLRD</title></head><body><article class="markdown-body"><h1>
+<a id="user-content-jlrd" class="anchor" href="#jlrd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>jLRD</h1>
+<p>Postorder Traversal (LRD) Jumped (后跟跳跃遍历)</p>
+<h3>
+<a id="user-content-1结构定义" class="anchor" href="#1%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、结构定义</h3>
+<blockquote>
+<p><em>后跟跳跃遍历算法，Postorder Traversal (LRD)Jumped，是学霸君APP中启动图片、运营广告位、推荐应用等功能模块所使用的一种高性能个性化展示算法，能实现不限规则的任意可配。</em></p>
+</blockquote>
+<p>各种规则、操作组合最大支持的不同配置数达：$$\sum_{i=1}^m C_m^i10^i$$</p>
+<p>其中，m为规则类型数，已知确定的规则有:uid、city、version、platform、channel、time、date，共7种(规则名不受限制，存什么规则名就是是什么规则)，10是规则支持的运算类型数</p>
+<table>
+    <thead>
+        <tr>
+            <th>运算</th>
+            <th>备注</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>eq</td>
+            <td>等于</td>
+        </tr>
+        <tr>
+            <td>neq</td>
+            <td>不等于</td>
+        </tr>
+        <tr>
+            <td>gt</td>
+            <td>大于</td>
+        </tr>
+        <tr>
+            <td>egt</td>
+            <td>大于等于</td>
+        </tr>
+        <tr>
+            <td>lt</td>
+            <td>小于</td>
+        </tr>
+        <tr>
+            <td>elt</td>
+            <td>小于等于</td>
+        </tr>
+        <tr>
+            <td>btw</td>
+            <td>区间内</td>
+        </tr>
+        <tr>
+            <td>nbtw</td>
+            <td>区间外</td>
+        </tr>
+        <tr>
+            <td>lk</td>
+            <td>包含</td>
+        </tr>
+        <tr>
+            <td>nlk</td>
+            <td>不包含</td>
+        </tr>
+    </tbody>
+</table>
+<blockquote>
+<p>不包含nlk(lk量超过总量一半，推荐使用nlk)</p>
+</blockquote>
+<p>规则的作用对象(以下简称对象)和它的规则按照树结构存储于同一张表中，建议表结构设计如下:</p>
+<div class="highlight highlight-source-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">TABLE</span> `<span class="pl-en">demo</span>` (
+<span class="pl-s"><span class="pl-pds">`</span>id<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">11</span>) unsigned <span class="pl-k">NOT NULL</span> AUTO_INCREMENT,
+<span class="pl-s"><span class="pl-pds">`</span>gid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-s"><span class="pl-pds">`</span>pid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-s"><span class="pl-pds">`</span>name<span class="pl-pds">`</span></span> <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">NOT NULL</span> DEFAULT <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,<span class="pl-k">//</span>规则名<span class="pl-k">OR</span>对象名 <span class="pl-s"><span class="pl-pds">`</span>value<span class="pl-pds">`</span></span> blob <span class="pl-k">NOT NULL</span>,<span class="pl-k">//</span>规则的值<span class="pl-k">OR</span>对象的值
+<span class="pl-s"><span class="pl-pds">`</span>op<span class="pl-pds">`</span></span> <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">NOT NULL</span> DEFAULT <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,<span class="pl-k">//</span>规则运算符
+<span class="pl-s"><span class="pl-pds">`</span>lft<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-s"><span class="pl-pds">`</span>rgt<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-s"><span class="pl-pds">`</span>lvl<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-s"><span class="pl-pds">`</span>add_time<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-k">PRIMARY KEY</span> (<span class="pl-s"><span class="pl-pds">`</span>id<span class="pl-pds">`</span></span>)
+);</pre></div>
+<h3>
+<a id="user-content-2匹配过程" class="anchor" href="#2%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2、匹配过程</h3>
+<p>以广告位为例，将树结构推倒拍扁，一次性从表中拉取，拉取结果如下:
+<a href="https://camo.githubusercontent.com/c96b1f596e8836735b874e2577295504c546a157/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f575832303138303730342d31303437333425343032782e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/c96b1f596e8836735b874e2577295504c546a157/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f575832303138303730342d31303437333425343032782e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/WX20180704-104734%402x.png" style="max-width:100%;"></a></p>
+<blockquote>
+<p><em>注意当op为lk时，value存储的只是redis指针，并非规则的真实值。这里也可以用mysql存储指针指向的真实值，选择redis主要是使用了redis可以设置过期时间跟活动截止时间一致，以达到过期数据的自动清理。</em></p>
+</blockquote>
+<p>拉到列表之后，最多只需遍历一次就可以算出满足规则的所有对象。遍历过程中如遇到规则不匹配，会产生跳跃，即直接忽略该对象的其他规则的匹配过程，所以速度非常快。</p>
+<p>相同的规则可以添加多条，他们之间是或的关系，不同规则之间是与的关系。匹配时，相同规则的多条规则只要匹配到一条就会跳过同名的其他规则继续去匹配，直到所有规则全部配成功，对象有效，否则，无效。</p>
+<p>由于同一个广告位只能显示一个对象，在遍历匹配的过程中如果同一个广告位匹配到多个对象，后匹配到的会覆盖之前的(列表按照加入的时间升 序排列),因此，最终只有一个对象生效。</p>
+<p><a href="https://camo.githubusercontent.com/88af5b68db2e3278a11a3d2de30218d0429ca0c3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f576563686174494d473134312e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/88af5b68db2e3278a11a3d2de30218d0429ca0c3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f576563686174494d473134312e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/WechatIMG141.png" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-3冲突解决机制" class="anchor" href="#3%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E6%9C%BA%E5%88%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3、冲突解决机制</h3>
+<p>下图A表示能看到广告A的用户集合，B表示能看到广告B的用户集合
+<a href="https://camo.githubusercontent.com/682af25e8e7f453beb83eb47df9af379e07a039f/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f312e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/682af25e8e7f453beb83eb47df9af379e07a039f/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f312e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/1.png" style="max-width:100%;"></a>
+集合A包含于集合B时，相同时间段内，如果仍希望广告A和广告B都能被用户看到，这是就需要解决冲突。
+<a href="https://camo.githubusercontent.com/52af9d68c0d50b7d287a51cce29953f80b71cb9c/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f322e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/52af9d68c0d50b7d287a51cce29953f80b71cb9c/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f322e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/2.png" style="max-width:100%;"></a>
+如上，左图中，集合B完全覆盖了集合A，导致集合A的用户看不到广告A而看到广告B，这时应将B广告先于A广告配置，这样集合A的用户能正常看到广告A，集合B中除去集合A以外的用户能看到B广告，冲突就解决了。</p>
+<p>当A、B不是包含于的关系，而只是存在交集，配置的先后对结果是有一定影响，但不存在冲突，各发布方沟通协调决定谁先谁后。</p>
+<p>超过两个广告的冲突解决依此类推。</p>
+<p>充分发挥你的想象力，没有配不了的，只有你没想到。</p>
+</article></body></html>
