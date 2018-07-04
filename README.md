@@ -79,7 +79,7 @@ PRIMARY KEY (`id`)
 ### 2、匹配过程
 
 以广告位为例，将树结构推倒拍扁，一次性从表中拉取，拉取结果如下:
-![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/WX20180704-104734@2x.png?Expires=1530676378&OSSAccessKeyId=TMP.AQEVLznCr9yLvBRSLJFCcb4ZsgVpXWY0k4AJVDg7Iv6k1E6ML09125QKQMkqADAtAhUAsW0KiLA31Ev0PYY8DkCtMdeVY8ICFHkWHnSsVX9olDNBJX7XCPaqOhAP&Signature=DalW75zjsqL6RFseFZnH5CLF79Y=)
+![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/WX20180704-104734%402x.png)
 
 > *注意当op为lk时，value存储的只是redis指针，并非规则的真实值。这里也可以用mysql存储指针指向的真实值，选择redis主要是使用了redis可以设置过期时间跟活动截止时间一致，以达到过期数据的自动清理。*
 
@@ -89,14 +89,14 @@ PRIMARY KEY (`id`)
 
  由于同一个广告位只能显示一个对象，在遍历匹配的过程中如果同一个广告位匹配到多个对象，后匹配到的会覆盖之前的(列表按照加入的时间升 序排列),因此，最终只有一个对象生效。
 
-![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/WechatIMG141.png?Expires=1530676567&OSSAccessKeyId=TMP.AQEVLznCr9yLvBRSLJFCcb4ZsgVpXWY0k4AJVDg7Iv6k1E6ML09125QKQMkqADAtAhUAsW0KiLA31Ev0PYY8DkCtMdeVY8ICFHkWHnSsVX9olDNBJX7XCPaqOhAP&Signature=J6GxSr2jNQwCBFuUrFyyAidgcUs=)
+![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/WechatIMG141.png)
 
 ### 3、冲突解决机制
 
 下图A表示能看到广告A的用户集合，B表示能看到广告B的用户集合
-![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/1.png?Expires=1530677271&OSSAccessKeyId=TMP.AQEVLznCr9yLvBRSLJFCcb4ZsgVpXWY0k4AJVDg7Iv6k1E6ML09125QKQMkqADAtAhUAsW0KiLA31Ev0PYY8DkCtMdeVY8ICFHkWHnSsVX9olDNBJX7XCPaqOhAP&Signature=iWhX6p/Am16DbJaJqLhdx9eGhfg=)
+![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/1.png)
 集合A包含于集合B时，相同时间段内，如果仍希望广告A和广告B都能被用户看到，这是就需要解决冲突。
-![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/2.png?Expires=1530677336&OSSAccessKeyId=TMP.AQEVLznCr9yLvBRSLJFCcb4ZsgVpXWY0k4AJVDg7Iv6k1E6ML09125QKQMkqADAtAhUAsW0KiLA31Ev0PYY8DkCtMdeVY8ICFHkWHnSsVX9olDNBJX7XCPaqOhAP&Signature=JXzf9BaljscDMiAt%2bFOiR0IJ9L0=)
+![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/2.png)
 如上，左图中，集合B完全覆盖了集合A，导致集合A的用户看不到广告A而看到广告B，这时应将B广告先于A广告配置，这样集合A的用户能正常看到广告A，集合B中除去集合A以外的用户能看到B广告，冲突就解决了。
 
 当A、B不是包含于的关系，而只是存在交集，配置的先后对结果是有一定影响，但不存在冲突，各发布方沟通协调决定谁先谁后。
