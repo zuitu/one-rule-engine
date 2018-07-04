@@ -6,6 +6,7 @@ Postorder Traversal (LRD) Jumped (后跟跳跃遍历)
 > *后跟跳跃遍历算法，Postorder Traversal (LRD)Jumped，是学霸君APP中启动图片、运营广告位、推荐应用等功能模块所使用的一种高性能个性化展示算法，能实现不限规则的任意可配。*
 
 各种规则、操作组合最大支持的不同配置数达：
+
 ![$$\sum_{i=1}^m C_m^i10^i$$](https://cxq9393.oss-cn-shanghai.aliyuncs.com/math.png)
 
 其中，m为规则类型数，已知确定的规则有:uid、city、version、platform、channel、time、date，共7种(规则名不受限制，存什么规则名就是是什么规则)，10是规则支持的运算类型数
