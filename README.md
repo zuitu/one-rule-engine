@@ -1,9 +1,14 @@
 # jLRD
+
 Postorder Traversal (LRD) Jumped (后跟跳跃遍历)
+
+> *后跟跳跃遍历，Postorder Traversal (LRD)Jumped，是一种轻量级、高性能的个性化匹配算法，可用于APP中启动图片、运营广告位、推荐应用等功能模块，实现不限规则任意可配的效果。*
+
+![图片标题](https://cxq9393.oss-cn-shanghai.aliyuncs.com/QQ20180805-173502@2x.png)
 
 ### 1、结构定义
 
-> *后跟跳跃遍历，Postorder Traversal (LRD)Jumped，是一种轻量级、高性能的个性化匹配算法，可用于APP中启动图片、运营广告位、推荐应用等功能模块，实现不限规则任意可配的效果。*
+树形结构，子节点存储规则，根结点存规则的作用对象(以下简称对象)。
 
 各种规则、操作组合最大支持的不同配置数达：
 
@@ -63,7 +68,7 @@ Postorder Traversal (LRD) Jumped (后跟跳跃遍历)
 
 > 不包含nlk(lk量超过总量一半，推荐使用nlk)
 
-规则的作用对象(以下简称对象)和它的规则按照树结构存储于同一张表中，建议表结构设计如下:
+对象和它的规则按照树结构存储于同一张表中，建议表结构设计如下:
 ```sql
 CREATE TABLE `demo` (
 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
