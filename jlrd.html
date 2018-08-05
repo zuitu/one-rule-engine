@@ -731,11 +731,13 @@ pre {
 </style><title>jLRD</title></head><body><article class="markdown-body"><h1>
 <a id="user-content-jlrd" class="anchor" href="#jlrd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>jLRD</h1>
 <p>Postorder Traversal (LRD) Jumped (后跟跳跃遍历)</p>
-<h3>
-<a id="user-content-1结构定义" class="anchor" href="#1%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、结构定义</h3>
 <blockquote>
 <p><em>后跟跳跃遍历，Postorder Traversal (LRD)Jumped，是一种轻量级、高性能的个性化匹配算法，可用于APP中启动图片、运营广告位、推荐应用等功能模块，实现不限规则任意可配的效果。</em></p>
 </blockquote>
+<p><a href="https://camo.githubusercontent.com/c3b413518a00e2dc0a5c8fae85470fbbcf5ebee3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f515132303138303830352d3137333530324032782e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/c3b413518a00e2dc0a5c8fae85470fbbcf5ebee3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f515132303138303830352d3137333530324032782e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/QQ20180805-173502@2x.png" style="max-width:100%;"></a></p>
+<h3>
+<a id="user-content-1结构定义" class="anchor" href="#1%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、结构定义</h3>
+<p>树形结构，子节点存储规则，根结点存规则的作用对象(以下简称对象)。</p>
 <p>各种规则、操作组合最大支持的不同配置数达：</p>
 <p><a href="https://camo.githubusercontent.com/d8146a91b581f7d4b21f777fc8e0120fcecd4bc8/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f6d6174682e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/d8146a91b581f7d4b21f777fc8e0120fcecd4bc8/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f6d6174682e706e67" alt="$$\sum_{i=1}^m C_m^i10^i$$" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/math.png" style="max-width:100%;"></a></p>
 <p>其中，m为规则类型数，已知确定的规则有:uid、city、version、platform、channel、time、date，共7种(规则名不受限制，存什么规则名就是是什么规则)，10是规则支持的运算类型数</p>
@@ -792,7 +794,7 @@ pre {
 <blockquote>
 <p>不包含nlk(lk量超过总量一半，推荐使用nlk)</p>
 </blockquote>
-<p>规则的作用对象(以下简称对象)和它的规则按照树结构存储于同一张表中，建议表结构设计如下:</p>
+<p>对象和它的规则按照树结构存储于同一张表中，建议表结构设计如下:</p>
 <div class="highlight highlight-source-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">TABLE</span> `<span class="pl-en">demo</span>` (
 <span class="pl-s"><span class="pl-pds">`</span>id<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">11</span>) unsigned <span class="pl-k">NOT NULL</span> AUTO_INCREMENT,
 <span class="pl-s"><span class="pl-pds">`</span>gid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
