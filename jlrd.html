@@ -734,29 +734,69 @@ pre {
 <h2>
 <a id="user-content-2研发背景" class="anchor" href="#2%E7%A0%94%E5%8F%91%E8%83%8C%E6%99%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2、研发背景</h2>
 <p>老的广告运营位的设计存在一些问题：</p>
-<p><em>1. 数据结构化很糟糕，没有明显的规律，容易受规则的影响</em>
-<em>2. 为满足需求，业务代码中也会写死匹配逻辑，扩展性差，耦合性高</em>
-<em>3. 匹配性能比较差</em></p>
+<ul>
+<li>
+<ol>
+<li>数据结构化很糟糕，没有明显的规律，容易受规则的影响 *</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>为满足需求，业务代码中也会写死匹配逻辑，扩展性差，耦合性高 *</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>匹配性能比较差 *</li>
+</ol>
+</li>
+</ul>
 <p>需要设计一套新的算法，使广告运营位支持任意规则的可配（匹配性能要好）。</p>
 <h2>
 <a id="user-content-3结构与特性" class="anchor" href="#3%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%B9%E6%80%A7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3、结构与特性</h2>
 <p>树结构，使用<a href="https://en.wikipedia.org/wiki/Nested_set_model" rel="nofollow">Nested set model</a>存mysql，根结点存储规则的作用对象(例如运营广告位，以下简称对象)，，子节点存储规则，规则类型相同的规则处于同一个直线分支，这样限制树结构，使根节点外的子节点最多只有一个子节点，类似这种：
 <a href="https://camo.githubusercontent.com/d6103bad2cf9a5adc7988e3d7858fffc6d288653/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f747265652e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/d6103bad2cf9a5adc7988e3d7858fffc6d288653/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f747265652e706e67" alt="tree" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/tree.png" style="max-width:100%;"></a></p>
 <p>每个节点使用左值node(lft)、右值node(rgt)、深度node(depth)来表示树型结构，这种改进后的结构有以下特性：</p>
-<p><em>1. 任意节点node的子节点数：(node(rgt) - node(lft) - 1) / 2</em>
-<em>2. 任意节点所处直线分之的节点总数（根节点除外）：(node(rgt) - node(lft) - 1) / 2 + node(depth) - 1（根节点深度是1，从0开始不用减1）</em>
-<em>3. 叶子节点：node(rgt) - node(lft) = 1</em></p>
+<ul>
+<li>
+<ol>
+<li>任意节点node的子节点数：(node(rgt) - node(lft) - 1) / 2 *</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>任意节点所处直线分之的节点总数（根节点除外）：(node(rgt) - node(lft) - 1) / 2 + node(depth) - 1（根节点深度是1，从0开始不用减1） *</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>叶子节点：node(rgt) - node(lft) = 1 *</li>
+</ol>
+</li>
+</ul>
 <blockquote>
 <p>上面左值、右值的计算请参考Nested set model</p>
 </blockquote>
 <h2>
 <a id="user-content-4存储数据" class="anchor" href="#4%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4、存储数据</h2>
 <p>上节结构属性之外，还有三个关键属性：node(topic)、node(value)、node(op)，用于存储业务数据，比如运营广告位，则存储运营广告位的内容和它下面的限定规则。</p>
+<ul>
+<li>
 <ol>
-<li>node(topic)，当节点存运营广告位内容的时候，node(topic)的值用来标识运营广告位的位置，存规则的时候，用于标识规则的类型。例如，城市规则，用于限制运营广告位生效的城市；版本号规则，用于限制登陆用的客户端版本，年龄规则，用于限制登陆用户的年龄，等等任意的规则。</li>
-<li>node(value)，当节点存储运营广告位的时候，node(value)存储广告位的内容，例如，文字链接的文本，链接，图片链接的图片地址，json健值对存储，存规则的时候，该属性存储规则的值</li>
-<li>node(op)，仅当存储规则的时候用于表示规则的计算类型</li>
+<li>node(topic)，当节点存运营广告位内容的时候，node(topic)的值用来标识运营广告位的位置，存规则的时候，用于标识规则的类型。例如，城市规则，用于限制运营广告位生效的城市；版本号规则，用于限制登陆用的客户端版本，年龄规则，用于限制登陆用户的年龄，等等任意的规则 *</li>
 </ol>
+</li>
+<li>
+<ol start="2">
+<li>node(value)，当节点存储运营广告位的时候，node(value)存储广告位的内容，例如，文字链接的文本，链接，图片链接的图片地址，json健值对存储，存规则的时候，该属性存储规则的值 *</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>node(op)，仅当存储规则的时候用于表示规则的计算类型 *</li>
+</ol>
+</li>
+</ul>
 <p>设计的运算类型一共十种：</p>
 <table>
     <thead>
