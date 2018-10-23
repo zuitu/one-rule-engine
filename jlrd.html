@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><style>@font-face {
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>@font-face {
   font-family: octicons-anchor;
   src: url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.woff) format('woff');
 }
@@ -728,19 +728,36 @@ pre {
     border: none;
   }
 }
-</style><title>jLRD</title></head><body><article class="markdown-body"><h1>
-<a id="user-content-jlrd" class="anchor" href="#jlrd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>jLRD</h1>
-<p>Postorder Traversal (LRD) Jumped (后跟跳跃遍历)</p>
+</style><title>nested</title></head><body><article class="markdown-body"><h2>
+<a id="user-content-1名字解释" class="anchor" href="#1%E5%90%8D%E5%AD%97%E8%A7%A3%E9%87%8A" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、名字解释</h2>
+<p>后跟跳跃遍历，是指在树结构的后根遍历过程中，跳过那些对计算结果不再起作用的节点，让树结构的遍历达到最快的一种遍历方式。可以在涉及到规则匹配的系统中使用。</p>
+<h2>
+<a id="user-content-2研发背景" class="anchor" href="#2%E7%A0%94%E5%8F%91%E8%83%8C%E6%99%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2、研发背景</h2>
+<p>老的广告运营位的设计存在一些问题：</p>
+<p><em>1. 数据结构化很糟糕，没有明显的规律，容易受规则的影响</em>
+<em>2. 为满足需求，业务代码中也会写死匹配逻辑，扩展性差，耦合性高</em>
+<em>3. 匹配性能比较差</em></p>
+<p>需要设计一套新的算法，使广告运营位支持任意规则的可配（匹配性能要好）。</p>
+<h2>
+<a id="user-content-3结构与特性" class="anchor" href="#3%E7%BB%93%E6%9E%84%E4%B8%8E%E7%89%B9%E6%80%A7" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3、结构与特性</h2>
+<p>树结构，使用<a href="https://en.wikipedia.org/wiki/Nested_set_model" rel="nofollow">Nested set model</a>存mysql，根结点存储规则的作用对象(例如运营广告位，以下简称对象)，，子节点存储规则，规则类型相同的规则处于同一个直线分支，这样限制树结构，使根节点外的子节点最多只有一个子节点，类似这种：
+<a href="https://camo.githubusercontent.com/d6103bad2cf9a5adc7988e3d7858fffc6d288653/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f747265652e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/d6103bad2cf9a5adc7988e3d7858fffc6d288653/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f747265652e706e67" alt="tree" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/tree.png" style="max-width:100%;"></a></p>
+<p>每个节点使用左值node(lft)、右值node(rgt)、深度node(depth)来表示树型结构，这种改进后的结构有以下特性：</p>
+<p><em>1. 任意节点node的子节点数：(node(rgt) - node(lft) - 1) / 2</em>
+<em>2. 任意节点所处直线分之的节点总数（根节点除外）：(node(rgt) - node(lft) - 1) / 2 + node(depth) - 1（根节点深度是1，从0开始不用减1）</em>
+<em>3. 叶子节点：node(rgt) - node(lft) = 1</em></p>
 <blockquote>
-<p><em>后跟跳跃遍历，Postorder Traversal (LRD)Jumped，是一种轻量级、高性能的个性化匹配算法，可用于APP中启动图片、运营广告位、推荐应用等功能模块，实现不限规则任意可配的效果。</em></p>
+<p>上面左值、右值的计算请参考Nested set model</p>
 </blockquote>
-<p><a href="https://camo.githubusercontent.com/c3b413518a00e2dc0a5c8fae85470fbbcf5ebee3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f515132303138303830352d3137333530324032782e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/c3b413518a00e2dc0a5c8fae85470fbbcf5ebee3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f515132303138303830352d3137333530324032782e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/QQ20180805-173502@2x.png" style="max-width:100%;"></a></p>
-<h3>
-<a id="user-content-1结构定义" class="anchor" href="#1%E7%BB%93%E6%9E%84%E5%AE%9A%E4%B9%89" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>1、结构定义</h3>
-<p>树形结构，子节点存储规则，根结点存规则的作用对象(以下简称对象)。</p>
-<p>各种规则、操作组合最大支持的不同配置数达：</p>
-<p><a href="https://camo.githubusercontent.com/d8146a91b581f7d4b21f777fc8e0120fcecd4bc8/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f6d6174682e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/d8146a91b581f7d4b21f777fc8e0120fcecd4bc8/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f6d6174682e706e67" alt="$$\sum_{i=1}^m C_m^i10^i$$" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/math.png" style="max-width:100%;"></a></p>
-<p>其中，m为规则类型数，已知确定的规则有:uid、city、version、platform、channel、time、date，共7种(规则名不受限制，存什么规则名就是是什么规则)，10是规则支持的运算类型数</p>
+<h2>
+<a id="user-content-4存储数据" class="anchor" href="#4%E5%AD%98%E5%82%A8%E6%95%B0%E6%8D%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>4、存储数据</h2>
+<p>上节结构属性之外，还有三个关键属性：node(topic)、node(value)、node(op)，用于存储业务数据，比如运营广告位，则存储运营广告位的内容和它下面的限定规则。</p>
+<ol>
+<li>node(topic)，当节点存运营广告位内容的时候，node(topic)的值用来标识运营广告位的位置，存规则的时候，用于标识规则的类型。例如，城市规则，用于限制运营广告位生效的城市；版本号规则，用于限制登陆用的客户端版本，年龄规则，用于限制登陆用户的年龄，等等任意的规则。</li>
+<li>node(value)，当节点存储运营广告位的时候，node(value)存储广告位的内容，例如，文字链接的文本，链接，图片链接的图片地址，json健值对存储，存规则的时候，该属性存储规则的值</li>
+<li>node(op)，仅当存储规则的时候用于表示规则的计算类型</li>
+</ol>
+<p>设计的运算类型一共十种：</p>
 <table>
     <thead>
         <tr>
@@ -775,19 +792,19 @@ pre {
         </tr>
         <tr>
             <td>btw</td>
-            <td>区间内</td>
+            <td>区间内，用于数运算</td>
         </tr>
         <tr>
             <td>nbtw</td>
-            <td>区间外</td>
+            <td>区间外，数值型运算</td>
         </tr>
         <tr>
-            <td>lk</td>
-            <td>包含</td>
+            <td>in</td>
+            <td>包含，片段型</td>
         </tr>
         <tr>
-            <td>nlk</td>
-            <td>不包含</td>
+            <td>nin</td>
+            <td>不包含，片段型</td>
         </tr>
     </tbody>
 </table>
@@ -797,35 +814,40 @@ pre {
 <p>对象和它的规则按照树结构存储于同一张表中，建议表结构设计如下:</p>
 <div class="highlight highlight-source-sql"><pre><span class="pl-k">CREATE</span> <span class="pl-k">TABLE</span> `<span class="pl-en">demo</span>` (
 <span class="pl-s"><span class="pl-pds">`</span>id<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">11</span>) unsigned <span class="pl-k">NOT NULL</span> AUTO_INCREMENT,
-<span class="pl-s"><span class="pl-pds">`</span>gid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
-<span class="pl-s"><span class="pl-pds">`</span>pid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
-<span class="pl-s"><span class="pl-pds">`</span>name<span class="pl-pds">`</span></span> <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">NOT NULL</span> DEFAULT <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,<span class="pl-k">//</span>规则名<span class="pl-k">OR</span>对象名 <span class="pl-s"><span class="pl-pds">`</span>value<span class="pl-pds">`</span></span> blob <span class="pl-k">NOT NULL</span>,<span class="pl-k">//</span>规则的值<span class="pl-k">OR</span>对象的值
+<span class="pl-s"><span class="pl-pds">`</span>gid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,<span class="pl-k">//</span>用于表示不同的运营广告位，同一个运营广告位，gid相同
+<span class="pl-s"><span class="pl-pds">`</span>pid<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,<span class="pl-k">//</span>辅助阅读字段，不参与计算
+<span class="pl-s"><span class="pl-pds">`</span>topic<span class="pl-pds">`</span></span> <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">NOT NULL</span> DEFAULT <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,<span class="pl-k">//</span>规则名<span class="pl-k">OR</span>对象名 <span class="pl-s"><span class="pl-pds">`</span>value<span class="pl-pds">`</span></span> blob <span class="pl-k">NOT NULL</span>,<span class="pl-k">//</span>规则的值<span class="pl-k">OR</span>对象的值
 <span class="pl-s"><span class="pl-pds">`</span>op<span class="pl-pds">`</span></span> <span class="pl-k">varchar</span>(<span class="pl-c1">255</span>) <span class="pl-k">NOT NULL</span> DEFAULT <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,<span class="pl-k">//</span>规则运算符
 <span class="pl-s"><span class="pl-pds">`</span>lft<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
 <span class="pl-s"><span class="pl-pds">`</span>rgt<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
-<span class="pl-s"><span class="pl-pds">`</span>lvl<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
+<span class="pl-s"><span class="pl-pds">`</span>depth<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
 <span class="pl-s"><span class="pl-pds">`</span>add_time<span class="pl-pds">`</span></span> <span class="pl-k">int</span>(<span class="pl-c1">10</span>) unsigned <span class="pl-k">NOT NULL</span>,
 <span class="pl-k">PRIMARY KEY</span> (<span class="pl-s"><span class="pl-pds">`</span>id<span class="pl-pds">`</span></span>)
 );</pre></div>
-<h3>
-<a id="user-content-2匹配过程" class="anchor" href="#2%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>2、匹配过程</h3>
-<p>以广告位为例，将树结构推倒拍扁，一次性从表中拉取，拉取结果如下:
-<a href="https://camo.githubusercontent.com/c96b1f596e8836735b874e2577295504c546a157/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f575832303138303730342d31303437333425343032782e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/c96b1f596e8836735b874e2577295504c546a157/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f575832303138303730342d31303437333425343032782e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/WX20180704-104734%402x.png" style="max-width:100%;"></a></p>
+<p>各种规则、操作组合最大支持的不同配置数达（任意规则可配）：</p>
+<p><a href="https://camo.githubusercontent.com/d8146a91b581f7d4b21f777fc8e0120fcecd4bc8/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f6d6174682e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/d8146a91b581f7d4b21f777fc8e0120fcecd4bc8/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f6d6174682e706e67" alt="$$\sum_{i=1}^m C_m^i10^i$$" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/math.png" style="max-width:100%;"></a></p>
+<p>其中，m为规则类型数，例如城市规则、版本号规则，用户的年龄规则等等(规则名不受限制，存什么规则名就是是什么规则)，10是十种运算类型。</p>
+<h2>
+<a id="user-content-5匹配过程" class="anchor" href="#5%E5%8C%B9%E9%85%8D%E8%BF%87%E7%A8%8B" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>5、匹配过程</h2>
+<p>后跟遍历的顺序读取运营广告位规则数据列表：</p>
+<p><a href="https://camo.githubusercontent.com/88af5b68db2e3278a11a3d2de30218d0429ca0c3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f576563686174494d473134312e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/88af5b68db2e3278a11a3d2de30218d0429ca0c3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f576563686174494d473134312e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/WechatIMG141.png" style="max-width:100%;"></a></p>
 <blockquote>
-<p><em>注意当op为lk时，value存储的只是redis指针，并非规则的真实值。这里也可以用mysql存储指针指向的真实值，选择redis主要是使用了redis可以设置过期时间跟活动截止时间一致，以达到过期数据的自动清理。</em></p>
+<p><em>注意当op为in、nin时，value存储的只是redis指针，并非规则的真实值。这里也可以用mysql存储指针指向的真实值，选择redis主要是使用了redis可以设置过期时间跟活动截止时间一致，以达到过期数据的自动清理。</em></p>
 </blockquote>
 <p>拉到列表之后，最多只需遍历一次就可以算出满足规则的所有对象。遍历过程中如遇到规则不匹配，会产生跳跃，即直接忽略该对象的其他规则的匹配过程，所以速度非常快。</p>
 <p>相同的规则可以添加多条，他们之间是或的关系，不同规则之间是与的关系。匹配时，相同规则的多条规则只要匹配到一条就会跳过同名的其他规则继续去匹配，直到所有规则全部配成功，对象有效，否则，无效。</p>
 <p>由于同一个广告位只能显示一个对象，在遍历匹配的过程中如果同一个广告位匹配到多个对象，后匹配到的会覆盖之前的(列表按照加入的时间升 序排列),因此，最终只有一个对象生效。</p>
-<p><a href="https://camo.githubusercontent.com/88af5b68db2e3278a11a3d2de30218d0429ca0c3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f576563686174494d473134312e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/88af5b68db2e3278a11a3d2de30218d0429ca0c3/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f576563686174494d473134312e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/WechatIMG141.png" style="max-width:100%;"></a></p>
-<h3>
-<a id="user-content-3冲突解决机制" class="anchor" href="#3%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E6%9C%BA%E5%88%B6" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>3、冲突解决机制</h3>
-<p>下图A表示能看到广告A的用户集合，B表示能看到广告B的用户集合
-<a href="https://camo.githubusercontent.com/682af25e8e7f453beb83eb47df9af379e07a039f/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f312e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/682af25e8e7f453beb83eb47df9af379e07a039f/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f312e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/1.png" style="max-width:100%;"></a>
-集合A包含于集合B时，相同时间段内，如果仍希望广告A和广告B都能被用户看到，这是就需要解决冲突。
-<a href="https://camo.githubusercontent.com/52af9d68c0d50b7d287a51cce29953f80b71cb9c/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f322e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/52af9d68c0d50b7d287a51cce29953f80b71cb9c/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f322e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/2.png" style="max-width:100%;"></a>
-如上，左图中，集合B完全覆盖了集合A，导致集合A的用户看不到广告A而看到广告B，这时应将B广告先于A广告配置，这样集合A的用户能正常看到广告A，集合B中除去集合A以外的用户能看到B广告，冲突就解决了。</p>
+<h2>
+<a id="user-content-6冲突解决" class="anchor" href="#6%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>6、冲突解决</h2>
+<p>下图A表示能看到广告A的用户集合，B表示能看到广告B的用户集合</p>
+<p><a href="https://camo.githubusercontent.com/682af25e8e7f453beb83eb47df9af379e07a039f/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f312e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/682af25e8e7f453beb83eb47df9af379e07a039f/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f312e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/1.png" style="max-width:100%;"></a></p>
+<p>集合A包含于集合B时，相同时间段内，如果仍希望广告A和广告B都能被用户看到，这是就需要解决冲突。</p>
+<p><a href="https://camo.githubusercontent.com/52af9d68c0d50b7d287a51cce29953f80b71cb9c/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f322e706e67" target="_blank" rel="nofollow"><img src="https://camo.githubusercontent.com/52af9d68c0d50b7d287a51cce29953f80b71cb9c/68747470733a2f2f637871393339332e6f73732d636e2d7368616e676861692e616c6979756e63732e636f6d2f322e706e67" alt="图片标题" data-canonical-src="https://cxq9393.oss-cn-shanghai.aliyuncs.com/2.png" style="max-width:100%;"></a></p>
+<p>如上，左图中，集合B完全覆盖了集合A，导致集合A的用户看不到广告A而看到广告B，这时应将B广告先于A广告配置，这样集合A的用户能正常看到广告A，集合B中除去集合A以外的用户能看到B广告，冲突就解决了。</p>
 <p>当A、B不是包含于的关系，而只是存在交集，配置的先后对结果是有一定影响，但不存在冲突，各发布方沟通协调决定谁先谁后。</p>
 <p>超过两个广告的冲突解决依此类推。</p>
 <p>充分发挥你的想象力，没有配不了的，只有你没想到。</p>
+<h2>
+<a id="user-content-参考文献" class="anchor" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>参考文献</h2>
+<p><a href="https://en.wikipedia.org/wiki/Nested_set_model" rel="nofollow">Nested set model</a></p>
 </article></body></html>
